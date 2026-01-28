@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>BAB3</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>BAB3</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Latihan Kosakata</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .card {
+    background: white;
+    padding: 30px;
+    width: 400px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  input {
+    width: 90%;
+    padding: 8px;
+    margin-top: 15px;
+  }
+  button {
+    margin-top: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  .result {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .wrong { color: red; }
+  .correct { color: green; }
+  ol { text-align:left; max-height:400px; overflow:auto; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2 id="question"></h2>
+  <input type="text" id="answerInput" placeholder="Tulis jawaban di sini">
+  <br>
+  <button id="nextBtn">Selanjutnya</button>
+</div>
+
+<script>
+let questions = [
+{ soal: "도시", jawaban: "kota" },
+{ soal: "부처", jawaban: "departemen" },
+{ soal: "특별시", jawaban: "kota istimewa" },
+{ soal: "과학", jawaban: "ilmu alam" },
+{ soal: "가장", jawaban: "paling" },
+{ soal: "인근", jawaban: "sekitar" },
+{ soal: "크다", jawaban: "besar" },
+{ soal: "교통", jawaban: "transportasi" },
+{ soal: "광역시", jawaban: "kota metropolitan" },
+{ soal: "규모", jawaban: "skala" },
+{ soal: "정치", jawaban: "politik" },
+{ soal: "세계적", jawaban: "mendunia" },
+{ soal: "경제", jawaban: "ekonomi" },
+{ soal: "해변", jawaban: "pantai" },
+{ soal: "중심지", jawaban: "titik pusat" },
+{ soal: "관광", jawaban: "pariwisata" },
+{ soal: "중심", jawaban: "pusat" },
+{ soal: "산업", jawaban: "industri" },
+{ soal: "주변", jawaban: "sekitar" },
+{ soal: "방문하다", jawaban: "berkunjung" },
+{ soal: "수도권", jawaban: "daerah ibukota" },
+{ soal: "조산업", jawaban: "industri kapal" },
+{ soal: "넘다", jawaban: "lebih" },
+{ soal: "중화학", jawaban: "industri kimia berat" },
+{ soal: "대한민국", jawaban: "REPUBLIK KOREA SELATAN" },
+{ soal: "관광객", jawaban: "wisatawan, turis" },
+{ soal: "관문", jawaban: "gerbang" },
+{ soal: "발달하다", jawaban: "berkembang" },
+{ soal: "국제", jawaban: "internasional" },
+{ soal: "공업도시", jawaban: "kota industri" },
+{ soal: "위치하다", jawaban: "berlokasi" },
+{ soal: "지방", jawaban: "wilayah" },
+{ soal: "자치", jawaban: "pribadi, independent" },
+{ soal: "섬유", jawaban: "serat tekstil" },
+{ soal: "행정", jawaban: "administrasi" },
+{ soal: "시인", jawaban: "penyair" },
+{ soal: "업무", jawaban: "pekerjaan" },
+{ soal: "남동쪽", jawaban: "tenggara" },
+{ soal: "효율적", jawaban: "efisien, efektif" },
+{ soal: "예술", jawaban: "seni" },
+{ soal: "수행하다", jawaban: "menjalankan, mematuhi" },
+{ soal: "아름답다", jawaban: "indah" },
+{ soal: "복합", jawaban: "penggabungan, penyatuan" },
+{ soal: "자동차", jawaban: "mobil" },
+{ soal: "교육부", jawaban: "departemen pendidikan" },
+{ soal: "정부", jawaban: "pemerintahan" },
+{ soal: "교육", jawaban: "pendidikan" },
+{ soal: "특별자치시", jawaban: "kota otonomi khusus" },
+{ soal: "도시인", jawaban: "orang kota" },
+];
+
+// Acak soal
+questions = questions.sort(() => Math.random() - 0.5);
+
+let index = 0;
+let score = 0;
+let userAnswers = [];
+
+const questionEl = document.getElementById("question");
+const answerInput = document.getElementById("answerInput");
+const nextBtn = document.getElementById("nextBtn");
+const card = document.querySelector(".card");
+
+function showQuestion() {
+  questionEl.textContent = "Soal " + (index + 1) + ": " + questions[index].soal;
+  answerInput.value = "";
+  answerInput.focus();
+}
+
+nextBtn.addEventListener("click", () => {
+  const userAnswer = answerInput.value.trim().toLowerCase();
+  userAnswers[index] = userAnswer; // simpan jawaban sesuai index
+
+  if (userAnswer === questions[index].jawaban) {
+    score++;
+  }
+
+  index++;
+  if (index < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  let answerList = "";
+  questions.forEach((q, i) => {
+    if (userAnswers[i] === q.jawaban) {
+      answerList += `<li>${q.soal} = <span class="correct">${q.jawaban}</span></li>`;
+    } else {
+      answerList += `<li>${q.soal} = <span class="correct">${q.jawaban}</span><br>
+                     Jawaban kamu: <span class="wrong">${userAnswers[i] || "(kosong)"}</span></li>`;
+    }
+  });
+
+  card.innerHTML = `
+    <h2>Hasil</h2>
+    <p class="result">Nilai: ${score} / ${questions.length}</p>
+    <hr>
+    <p>Kunci Jawaban:</p>
+    <ol>${answerList}</ol>
+  `;
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
+    
+  </body>
+  
+</html>
